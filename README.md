@@ -1,14 +1,24 @@
+## EDITING ...
+
+
 # animation_director
 
 A package to create nice and smooth animations for flutter
 
-## Getting Started
+## Introduction
 
-This project is a starting point for a Dart
-[package](https://flutter.dev/developing-packages/),
-a library module containing code that can be shared easily across
-multiple Flutter or Dart projects.
+A simple package to build beautiful and smooth animations for flutter framework. By using this package, you don't need 
+to bother yourself with `AnimationController`s, `AnimationTweens` and also timing and of those animations.
 
-For help getting started with Flutter, view our 
-[online documentation](https://flutter.dev/docs), which offers tutorials, 
-samples, guidance on mobile development, and a full API reference.
+Here there are some simple examples of what I've made with this package in 5 minutes for each one.
+
+
+![](showcase/animator-d1.gif)
+![](showcase/animator-m3x3.gif)
+![](showcase/hamburger.gif)
+![](showcase/mr-fastfood.gif)
+
+
+## Features
+
+
