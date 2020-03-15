@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/animation.dart';
 
 AnimationConfig _globalAnimationConfig =
-AnimationConfig(duration: Duration(milliseconds: 50), curve: Curves.linear);
+    AnimationConfig(duration: Duration(milliseconds: 50), curve: Curves.linear);
 
 double screenWidth;
 double screenHeight;
@@ -23,15 +23,16 @@ class AnimationDirector extends StatefulWidget {
   final bool clear;
   final Function(bool isCompleted) isCompleted;
 
-  AnimationDirector({this.key,
-    this.cast,
-    this.onCompleted,
-    this.repeatTimes = 1,
-    this.autoStart = false,
-    this.speed = 1,
-    this.group,
-    this.clear = true,
-    this.isCompleted})
+  AnimationDirector(
+      {this.key,
+      this.cast,
+      this.onCompleted,
+      this.repeatTimes = 1,
+      this.autoStart = false,
+      this.speed = 1,
+      this.group,
+      this.clear = true,
+      this.isCompleted})
       : assert(speed != null && speed > 0 && speed <= 10),
         assert(repeatTimes != null && repeatTimes >= 1),
         assert(autoStart != null),
@@ -139,14 +140,8 @@ class _AnimationDirectorState extends State<AnimationDirector>
   @override
   Widget build(BuildContext context) {
     if (screenHeight == null) {
-      screenHeight = MediaQuery
-          .of(context)
-          .size
-          .height;
-      screenWidth = MediaQuery
-          .of(context)
-          .size
-          .width;
+      screenHeight = MediaQuery.of(context).size.height;
+      screenWidth = MediaQuery.of(context).size.width;
     }
 
     return Stack(
@@ -231,30 +226,31 @@ class WidgetDirectorItem extends StatefulWidget {
   final Function adSpeedFactor;
   final Function(ActorWidget aw) actorsLastSnapshot;
   final Function(ActorWidget aw, AnimatedPositioned ap)
-  updateActorsLastSnapshot;
+      updateActorsLastSnapshot;
   final Function(ActorWidget aw) actorsWidgetStates;
   final Function(ActorWidget aw, SnapShotActorAction snapshot)
-  updateActorsWidgetStates;
+      updateActorsWidgetStates;
   final Function checkIfAllActionsCompleted;
   final Function(int addedActions) adAddToActions;
 
 //  final _InnerAnimationConfig animationConfig;
 
-  WidgetDirectorItem({this.actorWidget,
-    this.key,
-    this.snapshotKey,
-    this.actorsLastSnapshot,
-    this.updateActorsLastSnapshot,
-    this.adGroup,
-    this.adFreshStart,
-    this.adCompletedActions,
-    this.adAllActions,
-    this.adPlusCompletedActions,
-    this.adSpeedFactor,
-    this.actorsWidgetStates,
-    this.updateActorsWidgetStates,
-    this.checkIfAllActionsCompleted,
-    this.adAddToActions});
+  WidgetDirectorItem(
+      {this.actorWidget,
+      this.key,
+      this.snapshotKey,
+      this.actorsLastSnapshot,
+      this.updateActorsLastSnapshot,
+      this.adGroup,
+      this.adFreshStart,
+      this.adCompletedActions,
+      this.adAllActions,
+      this.adPlusCompletedActions,
+      this.adSpeedFactor,
+      this.actorsWidgetStates,
+      this.updateActorsWidgetStates,
+      this.checkIfAllActionsCompleted,
+      this.adAddToActions});
 
   @override
   _WidgetDirectorItemState createState() => _WidgetDirectorItemState();
@@ -303,8 +299,8 @@ class _WidgetDirectorItemState extends State<WidgetDirectorItem>
 
       if (item.path != null) {
         for (int innerIterator = 0;
-        innerIterator < _animationsList.length;
-        innerIterator++) {
+            innerIterator < _animationsList.length;
+            innerIterator++) {
           if (innerIterator > iterator) {
             if (_animationsList[innerIterator].contains('position')) {
               addedActions++;
@@ -314,8 +310,7 @@ class _WidgetDirectorItemState extends State<WidgetDirectorItem>
                     top: -2000,
                     left: -2000,
                     duration: Duration(milliseconds: 0)),
-              )
-                .._extra = 'AfterPath');
+              ).._extra = 'AfterPath');
               break;
             }
           }
@@ -337,7 +332,7 @@ class _WidgetDirectorItemState extends State<WidgetDirectorItem>
           _localSpeedFactor = widget.adSpeedFactor();
 
           SnapShotActorAction lastSA =
-          widget.actorsWidgetStates(widget.actorWidget);
+              widget.actorsWidgetStates(widget.actorWidget);
 
           await Future.delayed(item.waitBeforeStart * _localSpeedFactor);
 
@@ -436,11 +431,11 @@ class _WidgetDirectorItemState extends State<WidgetDirectorItem>
               duration: aScl.duration * _localSpeedFactor, vsync: this);
           _animationControllers.add(actorAction.scale._scaleController);
           actorAction.scale._animation = Tween(
-              begin: actorAction.scale.startScale,
-              end: actorAction.scale.finishScale)
+                  begin: actorAction.scale.startScale,
+                  end: actorAction.scale.finishScale)
               .animate(CurvedAnimation(
-              parent: actorAction.scale._scaleController,
-              curve: actorAction.scale.curve ?? Curves.easeIn));
+                  parent: actorAction.scale._scaleController,
+                  curve: actorAction.scale.curve ?? Curves.easeIn));
           actorAction.scale._scaleController.forward();
 
           actorAction.rotation._rotationController = AnimationController(
@@ -525,19 +520,19 @@ class _WidgetDirectorItemState extends State<WidgetDirectorItem>
             alignment: Alignment.center,
             transform: Matrix4.identity()
               ..rotateZ((actorAction.rotation._animation.value *
-                  actorAction.rotation.rotationTurns *
-                  pi *
-                  2) *
+                      actorAction.rotation.rotationTurns *
+                      pi *
+                      2) *
                   clockwise)
               ..rotateX((actorAction.rotation._animation.value *
-                  actorAction.rotation.verticalFlipTurns *
-                  pi *
-                  2) *
+                      actorAction.rotation.verticalFlipTurns *
+                      pi *
+                      2) *
                   clockwise)
               ..rotateY((actorAction.rotation._animation.value *
-                  actorAction.rotation.horizontalFlipTurns *
-                  pi *
-                  2) *
+                      actorAction.rotation.horizontalFlipTurns *
+                      pi *
+                      2) *
                   clockwise),
             child: AnimatedContainer(
               duration: actorAction.character.duration * _localSpeedFactor,
@@ -660,18 +655,19 @@ class ActorAction {
 
 //  ActorPhysics physics;
 
-  ActorAction({this.group,
-    this.onCompleted,
-    this.onStart,
-    this.waitBeforeStart = const Duration(milliseconds: 0),
-    this.position,
-    this.path,
-    this.opacity,
-    this.character,
-    this.rotation,
-    this.scale
+  ActorAction(
+      {this.group,
+      this.onCompleted,
+      this.onStart,
+      this.waitBeforeStart = const Duration(milliseconds: 0),
+      this.position,
+      this.path,
+      this.opacity,
+      this.character,
+      this.rotation,
+      this.scale
 //      this.physics
-  });
+      });
 }
 
 class ActorWidget {
@@ -732,19 +728,20 @@ class ActorPath extends AnimationConfig {
   int progressAnimationRepeat;
   bool fadingProgress;
 
-  ActorPath({duration,
-    curve,
-    this.path,
-    this.offset,
-    this.traversePercentage,
-    this.startPositionInPercent,
-    this.displayPath,
-    this.displayProgress,
-    this.pathStyle,
-    this.progressStyle,
-    this.progressLength,
-    this.progressAnimationRepeat,
-    this.fadingProgress})
+  ActorPath(
+      {duration,
+      curve,
+      this.path,
+      this.offset,
+      this.traversePercentage,
+      this.startPositionInPercent,
+      this.displayPath,
+      this.displayProgress,
+      this.pathStyle,
+      this.progressStyle,
+      this.progressLength,
+      this.progressAnimationRepeat,
+      this.fadingProgress})
       : /*assert(path != null),*/
         assert(traversePercentage == null ||
             (traversePercentage > 0 && traversePercentage <= 1000)),
@@ -769,16 +766,17 @@ class ActorCharacter extends AnimationConfig {
   BoxDecoration decoration;
   BoxDecoration foregroundDecoration;
 
-  ActorCharacter({duration,
-    curve,
-    this.child,
-    this.padding,
-    this.margin,
-    this.width,
-    this.height,
-    this.clipPath,
-    this.decoration,
-    this.foregroundDecoration})
+  ActorCharacter(
+      {duration,
+      curve,
+      this.child,
+      this.padding,
+      this.margin,
+      this.width,
+      this.height,
+      this.clipPath,
+      this.decoration,
+      this.foregroundDecoration})
       : super(duration: duration, curve: curve);
 
   @override
@@ -816,16 +814,17 @@ class ActorRotation extends AnimationConfig {
   double verticalFlipTurns;
   double horizontalFlipTurns;
 
-  ActorRotation({duration,
-    curve,
-    this.rotationTurns,
-    this.alignment,
-    this.clockwise,
-    this.verticalFlipTurns,
-    this.horizontalFlipTurns,
-    this.startTween})
+  ActorRotation(
+      {duration,
+      curve,
+      this.rotationTurns,
+      this.alignment,
+      this.clockwise,
+      this.verticalFlipTurns,
+      this.horizontalFlipTurns,
+      this.startTween})
       : assert(startTween == null ||
-      (startTween != null && startTween >= 0 && startTween < 1)),
+            (startTween != null && startTween >= 0 && startTween < 1)),
         super(duration: duration, curve: curve);
 }
 
@@ -849,24 +848,25 @@ class PathAnimation extends StatefulWidget {
   final double fixedHeight;
   final int startPositionInPercent;
 
-  PathAnimation({this.key,
-    this.path,
-    this.duration,
-    this.curve,
-    this.child,
-    this.offset,
-    this.fadingProgress = false,
-    this.displayPath = false,
-    this.displayProgress = false,
-    this.onProgress,
-    this.pathStyle,
-    this.progressStyle,
-    this.progressAnimationRepeat,
-    this.progressLength,
-    this.fixedHeight,
-    this.fixedWidth,
-    this.traversePercentage = 100,
-    this.startPositionInPercent = 0});
+  PathAnimation(
+      {this.key,
+      this.path,
+      this.duration,
+      this.curve,
+      this.child,
+      this.offset,
+      this.fadingProgress = false,
+      this.displayPath = false,
+      this.displayProgress = false,
+      this.onProgress,
+      this.pathStyle,
+      this.progressStyle,
+      this.progressAnimationRepeat,
+      this.progressLength,
+      this.fixedHeight,
+      this.fixedWidth,
+      this.traversePercentage = 100,
+      this.startPositionInPercent = 0});
 
   @override
   State<StatefulWidget> createState() {
@@ -897,32 +897,32 @@ class PathAnimationState extends State<PathAnimation>
 
     _controller = AnimationController(vsync: this, duration: widget.duration);
     _animation = Tween(
-        begin: (widget.startPositionInPercent == 0)
-            ? 0.0
-            : widget.startPositionInPercent / 100,
-        end: widget.traversePercentage / 100)
+            begin: (widget.startPositionInPercent == 0)
+                ? 0.0
+                : widget.startPositionInPercent / 100,
+            end: widget.traversePercentage / 100)
         .animate(CurvedAnimation(parent: _controller, curve: widget.curve))
-      ..addListener(() {
-        if (widget.displayProgress) {
-          points.add(new Offset(position.dx, position.dy));
-          if (widget.progressLength != null &&
-              points.length > widget.progressLength) {
-            points.removeAt(0);
-          }
-        }
-        _getPositions();
-        setState(() {});
-      })
-      ..addStatusListener((status) {
-        if (_repeatedAnimation < widget.progressAnimationRepeat) {
-          if (status == AnimationStatus.completed) {
-            _controller.forward(from: 0);
-            _repeatedAnimation++;
-          }
-        }
+          ..addListener(() {
+            if (widget.displayProgress) {
+              points.add(new Offset(position.dx, position.dy));
+              if (widget.progressLength != null &&
+                  points.length > widget.progressLength) {
+                points.removeAt(0);
+              }
+            }
+            _getPositions();
+            setState(() {});
+          })
+          ..addStatusListener((status) {
+            if (_repeatedAnimation < widget.progressAnimationRepeat) {
+              if (status == AnimationStatus.completed) {
+                _controller.forward(from: 0);
+                _repeatedAnimation++;
+              }
+            }
 
-        setState(() {});
-      });
+            setState(() {});
+          });
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _controller.forward();
@@ -944,23 +944,23 @@ class PathAnimationState extends State<PathAnimation>
         children: <Widget>[
           (widget.displayPath)
               ? Positioned(
-            top: 0,
-            child: CustomPaint(
-              painter:
-              PathPainter(path: _path, pathStyle: widget.pathStyle),
-            ),
-          )
+                  top: 0,
+                  child: CustomPaint(
+                    painter:
+                        PathPainter(path: _path, pathStyle: widget.pathStyle),
+                  ),
+                )
               : Container(),
           (widget.displayProgress)
               ? Positioned(
-            top: 0,
-            child: CustomPaint(
-              painter: LinePainter(
-                  points: points,
-                  progressStyle: widget.progressStyle,
-                  fadingProgress: widget.fadingProgress),
-            ),
-          )
+                  top: 0,
+                  child: CustomPaint(
+                    painter: LinePainter(
+                        points: points,
+                        progressStyle: widget.progressStyle,
+                        fadingProgress: widget.fadingProgress),
+                  ),
+                )
               : Container(),
           Positioned(
             key: _key,
@@ -975,10 +975,7 @@ class PathAnimationState extends State<PathAnimation>
 
   _getPositions() {
     if (_key != null && _key.currentContext != null) {
-      double paddingTop = MediaQuery
-          .of(context)
-          .padding
-          .top;
+      double paddingTop = MediaQuery.of(context).padding.top;
       if (paddingTop > 0)
         paddingTop = 0;
       else
@@ -1091,12 +1088,12 @@ Path generatePath({Path path, String pathString}) {
   List<String> pathDetails = pathString.split("PS");
   if (pathDetails.length > 1) {
     RegExpMatch adaptiveWidthRgx =
-    RegExp(r'(?<=W)(\d*)(?=\s*)').firstMatch(pathDetails[1]);
+        RegExp(r'(?<=W)(\d*)(?=\s*)').firstMatch(pathDetails[1]);
     if (adaptiveWidthRgx != null)
       adaptiveWidth = int.parse(adaptiveWidthRgx.group(0)).toDouble();
 
     RegExpMatch adaptiveHeightRgx =
-    RegExp(r'(?<=H)(\d*)(?=\s*)').firstMatch(pathDetails[1]);
+        RegExp(r'(?<=H)(\d*)(?=\s*)').firstMatch(pathDetails[1]);
     if (adaptiveHeightRgx != null)
       adaptiveHeight = int.parse(adaptiveHeightRgx.group(0)).toDouble();
   }

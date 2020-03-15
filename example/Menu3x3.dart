@@ -231,9 +231,7 @@ class _Menu3x3State extends State<Menu3x3> {
                       padding: EdgeInsets.all(0),
                       splashColor: Colors.transparent,
                       onPressed: () {
-                        print("IC $isCompleted");
                         if(isCompleted) {
-                          print("CLICKED");
                           group = 'back';
                           setState(() {
 
