@@ -32,7 +32,7 @@ class _Dribble1SFState extends State<Dribble1SF> {
         cast: [
           ActorWidget(name: 'BG', actions: [
             ActorAction(
-                container: ActorContainer(
+                character: ActorCharacter(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(color: Colors.white70),
@@ -48,7 +48,7 @@ class _Dribble1SFState extends State<Dribble1SF> {
                     left: 0,
                     curve: Curves.elasticOut,
                     duration: Duration(milliseconds: 1500)),
-                container: ActorContainer(
+                character: ActorCharacter(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
@@ -68,7 +68,7 @@ class _Dribble1SFState extends State<Dribble1SF> {
                     left: 0,
                     curve: Curves.elasticOut,
                     duration: Duration(milliseconds: 2100)),
-                container: ActorContainer(
+                character: ActorCharacter(
                   width: MediaQuery.of(context).size.width,
                   height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(color: Color(0xfff0f0f0)),
@@ -88,7 +88,7 @@ class _Dribble1SFState extends State<Dribble1SF> {
                   left: 0,
                   curve: Curves.elasticOut,
                   duration: Duration(milliseconds: 1700)),
-              container: ActorContainer(
+              character: ActorCharacter(
                 width: MediaQuery.of(context).size.width * 2,
                 height: MediaQuery.of(context).size.height,
                 decoration: BoxDecoration(color: Color(0xffe5e5e5)),
@@ -106,7 +106,7 @@ class _Dribble1SFState extends State<Dribble1SF> {
                   left: -40,
                   curve: Curves.elasticOut,
                   duration: Duration(milliseconds: 700)),
-              container: ActorContainer(
+              character: ActorCharacter(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 decoration: BoxDecoration(color: Color(0xffFBEBF5)),
@@ -117,7 +117,7 @@ class _Dribble1SFState extends State<Dribble1SF> {
             name: 'BxSh',
             actions: [
           ActorAction(position: ActorPosition(left: -100, top: MediaQuery.of(context).size.height + 100),
-              container: ActorContainer(
+              character: ActorCharacter(
                 width: MediaQuery.of(context).size.width + 200,
                 height: 100,
                 decoration: BoxDecoration(
@@ -167,7 +167,7 @@ class _Dribble1SFState extends State<Dribble1SF> {
             ActorAction(
                 position: ActorPosition(left: 0, top: 160),
                 opacity: ActorOpacity(opacity: 0),
-                container: ActorContainer(
+                character: ActorCharacter(
                   width: MediaQuery.of(context).size.width,
 //                height: 100,
                   child: Center(
@@ -187,7 +187,7 @@ class _Dribble1SFState extends State<Dribble1SF> {
             ActorAction(
                 position: ActorPosition(left: 0, top: 200),
                 opacity: ActorOpacity(opacity: 0),
-                container: ActorContainer(
+                character: ActorCharacter(
                   width: MediaQuery.of(context).size.width,
                   height: 100,
                   child: Center(
@@ -225,7 +225,7 @@ ActorWidget footerButton(
         waitBeforeStart: Duration(milliseconds: startInMilliseconds),
         position: ActorPosition(
             top: MediaQuery.of(context).size.height + 100, left: left),
-        container: ActorContainer(
+        character: ActorCharacter(
             width: MediaQuery.of(context).size.width / 5,
             height: 60,
             decoration: BoxDecoration(color: Colors.white),

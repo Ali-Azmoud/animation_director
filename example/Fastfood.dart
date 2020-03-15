@@ -67,7 +67,7 @@ ActorWidget title({BuildContext context}) {
             left: 0,
             right: 0,
           ),
-          container: ActorContainer(
+          character: ActorCharacter(
               child: Center(
                 child: Text("Mr FastFood",
                   style: TextStyle(fontSize: 40),),
@@ -92,7 +92,7 @@ ActorWidget start() {
             left: 0,
             right: 0,
           ),
-          container: ActorContainer(
+          character: ActorCharacter(
               child: Center(
             child: MaterialButton(
               height: 100,
@@ -133,7 +133,7 @@ List<ActorWidget> background({BuildContext context}) {
             left: 0,
             right: 0,
           ),
-          container: ActorContainer(
+          character: ActorCharacter(
               height: MediaQuery.of(context).size.height,
               decoration:
                   BoxDecoration(color: Colors.white)))
@@ -152,7 +152,7 @@ ActorWidget redBackground({BuildContext context}) {
           right: 0,
         ),
         scale: ActorScale(startScale: 0, finishScale: 0),
-        container: ActorContainer(
+        character: ActorCharacter(
             duration: Duration(milliseconds: 500),
             curve: Curves.decelerate,
             height: MediaQuery.of(context).size.height,
@@ -173,7 +173,7 @@ ActorWidget redBackground({BuildContext context}) {
             alignment: Alignment.topCenter,
             duration: Duration(milliseconds: 2100),
             curve: Curves.elasticOut),
-        container: ActorContainer(
+        character: ActorCharacter(
             height: MediaQuery.of(context).size.height,
             decoration: BoxDecoration(
                 color: Colors.redAccent,
@@ -196,7 +196,7 @@ List<ActorWidget> food(
               traversePercentage: 50,
               curve: Curves.easeOutBack,
               duration: Duration(milliseconds: 500)),
-          container: ActorContainer(
+          character: ActorCharacter(
               width: 100,
               height: 100,
 decoration: BoxDecoration(color: Colors.blue)
@@ -216,7 +216,7 @@ decoration: BoxDecoration(color: Colors.blue)
       ActorAction(
           waitBeforeStart: Duration(milliseconds: wait),
           position: ActorPosition(top: 180, left: 0, right: 0),
-          container: ActorContainer(
+          character: ActorCharacter(
               width: 100,
               child: Center(
                   child: Text(
@@ -248,7 +248,7 @@ decoration: BoxDecoration(color: Colors.blue)
           scale: ActorScale(startScale: 0, finishScale: 0)),
       ActorAction(
           waitBeforeStart: Duration(milliseconds: 100),
-          container: ActorContainer(
+          character: ActorCharacter(
               child: Center(
             child: Container(width: 220, child: Text(description)),
           )),
@@ -280,7 +280,7 @@ ActorWidget footerButton(
         waitBeforeStart: Duration(milliseconds: startInMilliseconds),
         position: ActorPosition(
             top: MediaQuery.of(context).size.height + 100, left: left),
-        container: ActorContainer(
+        character: ActorCharacter(
             width: MediaQuery.of(context).size.width / 5,
             height: 60,
             decoration: BoxDecoration(color: Colors.white),

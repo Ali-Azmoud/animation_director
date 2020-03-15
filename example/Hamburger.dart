@@ -35,7 +35,7 @@ class _HamburgerState extends State<Hamburger> {
 /*          ActorWidget(
                 actions: [
                   ActorAction(
-                    container: ActorContainer(
+                    character: ActorCharacter(
                       width: MediaQuery.of(context).size.width,
                       height: MediaQuery.of(context).size.height,
                       decoration: BoxDecoration(
@@ -50,7 +50,7 @@ class _HamburgerState extends State<Hamburger> {
             actions: [
               ActorAction(
                   position: ActorPosition(top: 100, left: -400),
-                  container: ActorContainer(
+                  character: ActorCharacter(
                       width: 400,
                       height: 400,
                       decoration: BoxDecoration(
@@ -79,7 +79,7 @@ class _HamburgerState extends State<Hamburger> {
                   waitBeforeStart: Duration(milliseconds: 3000),
                   position: ActorPosition(
                       top: 0, left: -MediaQuery.of(context).size.width/2),
-                  container: ActorContainer(
+                  character: ActorCharacter(
                       width: MediaQuery.of(context).size.width/2,
                       height: MediaQuery.of(context).size.height,
                       decoration: BoxDecoration(color: Colors.deepPurple))),
@@ -89,7 +89,7 @@ class _HamburgerState extends State<Hamburger> {
                       curve: Curves.easeOutCubic,
                       duration: Duration(milliseconds: 600))),
               ActorAction(
-                  container: ActorContainer(
+                  character: ActorCharacter(
                       decoration: BoxDecoration(
                           color: Color(0xff077D19)
                       ),
@@ -162,7 +162,7 @@ class _HamburgerState extends State<Hamburger> {
                     top: MediaQuery.of(context).size.height,
                     left: 0,
                   ),
-                  container: ActorContainer(
+                  character: ActorCharacter(
                       width: MediaQuery.of(context).size.width,
                       height: 300,
                       decoration: BoxDecoration(color: Color(0xfffbe9e9)),
@@ -201,7 +201,7 @@ class _HamburgerState extends State<Hamburger> {
                     top: 20,
                     left: 8,
                   ),
-                  container: ActorContainer(
+                  character: ActorCharacter(
                       height: 200,
                       width: 300,
                       child: Text(
@@ -232,7 +232,7 @@ class _HamburgerState extends State<Hamburger> {
                   top: MediaQuery.of(context).size.height - 120,
                   left: -300,
                 ),
-                container: ActorContainer(
+                character: ActorCharacter(
                     height: 200,
                     width: 300,
                     child: Column(
@@ -272,7 +272,7 @@ class _HamburgerState extends State<Hamburger> {
           ActorAction(
             waitBeforeStart: waitBefore,
             position: ActorPosition(left: -200, top: top),
-            container: ActorContainer(
+            character: ActorCharacter(
                 width: 200,
                 height: 100,
                 child: Text(
@@ -307,7 +307,7 @@ class _HamburgerState extends State<Hamburger> {
                   path: 'M -30 100 A 1 1 0 0 1 -30 500 ',
                   curve: pathCurve,
                   duration: pathDuration),
-              container: ActorContainer(
+              character: ActorCharacter(
                   width: 100,
                   height: 100,
                   child: Image.asset('assets/images/' + image + '.png')),

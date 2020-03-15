@@ -165,7 +165,7 @@ class _AnimationDirectorState extends State<AnimationDirector>
 
       _actorsWidgetStates[actorWidget.name] ??= SnapShotActorAction(
           position: ActorPosition(),
-          container: ActorContainer(
+          character: ActorCharacter(
               decoration: BoxDecoration(color: Colors.transparent)),
           scale: ActorScale());
       _widgetsArray.add(WidgetDirectorItem(
@@ -266,7 +266,7 @@ class _WidgetDirectorItemState extends State<WidgetDirectorItem>
   List<List<String>> _animationsList = [];
   Key actorKey = Key(_randomKey());
 
-  ActorContainer lastACon = ActorContainer();
+  ActorCharacter lastACon = ActorCharacter();
 
 //  SpringSimulation lastPhysicsSpringSimulation;
   Offset lastPathOffset;
@@ -285,7 +285,7 @@ class _WidgetDirectorItemState extends State<WidgetDirectorItem>
       if (item.position != null) actorActions.add('position');
       if (item.path != null) actorActions.add('path');
       if (item.rotation != null) actorActions.add('rotation');
-      if (item.container != null) actorActions.add('container');
+      if (item.character != null) actorActions.add('character');
       if (item.opacity != null) actorActions.add('opacity');
       _animationsList.add(actorActions);
     }
@@ -369,18 +369,18 @@ class _WidgetDirectorItemState extends State<WidgetDirectorItem>
           aOpc.curve ??= _globalAnimationConfig.curve;
           aOpc.opacity ??= 1;
 
-          ActorContainer aCon = item.container ?? lastSA.container;
-          aCon.duration ??= _globalAnimationConfig.duration;
-          aCon.curve ??= _globalAnimationConfig.curve;
-          aCon.decoration ??= lastSA.container.decoration ?? null;
-          aCon.foregroundDecoration ??=
-              lastSA.container.foregroundDecoration ?? null;
-          aCon.width ??= lastSA.container.width ?? null;
-          aCon.height ??= lastSA.container.height ?? null;
-          aCon.padding ??= lastSA.container.padding ?? null;
-          aCon.margin ??= lastSA.container.margin ?? null;
-          aCon.child ??= lastSA.container.child ?? null;
-          aCon.clipPath ??= lastSA.container.clipPath ?? null;
+          ActorCharacter aChar = item.character ?? lastSA.character;
+          aChar.duration ??= _globalAnimationConfig.duration;
+          aChar.curve ??= _globalAnimationConfig.curve;
+          aChar.decoration ??= lastSA.character.decoration ?? null;
+          aChar.foregroundDecoration ??=
+              lastSA.character.foregroundDecoration ?? null;
+          aChar.width ??= lastSA.character.width ?? null;
+          aChar.height ??= lastSA.character.height ?? null;
+          aChar.padding ??= lastSA.character.padding ?? null;
+          aChar.margin ??= lastSA.character.margin ?? null;
+          aChar.child ??= lastSA.character.child ?? null;
+          aChar.clipPath ??= lastSA.character.clipPath ?? null;
 
           ActorRotation aRot = item.rotation ?? ActorRotation();
           aRot.duration ??= _globalAnimationConfig.duration;
@@ -402,14 +402,12 @@ class _WidgetDirectorItemState extends State<WidgetDirectorItem>
             aPath.displayPath ??= false;
             aPath.displayProgress ??= false;
             aPath.fadingProgress ??= false;
-            aPath.fixedWidth ??= null;
-            aPath.fixedHeight ??= null;
             aPath.pathStyle ??= null;
             aPath.progressStyle ??= null;
             aPath.progressLength ??= null;
             aPath.progressAnimationRepeat ??= 0;
             aPath.offset ??=
-                Offset((aCon.width ?? 1) / 2, (aCon.height ?? 1) / 2);
+                Offset((aChar.width ?? 1) / 2, (aChar.height ?? 1) / 2);
           }
 
           actorAction = ActorAction(
@@ -421,14 +419,14 @@ class _WidgetDirectorItemState extends State<WidgetDirectorItem>
               rotation: aRot,
               onStart: item.onStart,
               onCompleted: item.onCompleted,
-              container: aCon,
+              character: aChar,
               scale: aScl);
 
           widget.updateActorsWidgetStates(
               widget.actorWidget,
               SnapShotActorAction(
                   position: actorAction.position,
-                  container: actorAction.container,
+                  character: actorAction.character,
                   scale: ActorScale(
                       startScale: actorAction.scale.finishScale,
                       finishScale: actorAction.scale.finishScale,
@@ -481,7 +479,7 @@ class _WidgetDirectorItemState extends State<WidgetDirectorItem>
               .add(aPath != null ? aPath.duration.inMilliseconds : 0);
           lastActionDurations.add(aOpc.duration.inMilliseconds);
           lastActionDurations.add(aRot.duration.inMilliseconds);
-          lastActionDurations.add(aCon.duration.inMilliseconds);
+          lastActionDurations.add(aChar.duration.inMilliseconds);
           lastActionDurations.add(aScl.duration.inMilliseconds);
           int longestTransitionInMilliSeconds = lastActionDurations.reduce(max);
           await Future.delayed(
@@ -542,25 +540,25 @@ class _WidgetDirectorItemState extends State<WidgetDirectorItem>
                   2) *
                   clockwise),
             child: AnimatedContainer(
-              duration: actorAction.container.duration * _localSpeedFactor,
-              curve: actorAction.container.curve,
-              width: actorAction.container.width,
-              height: actorAction.container.height,
-              padding: actorAction.container.padding,
-              margin: actorAction.container.margin,
-              decoration: actorAction.container.decoration,
-              foregroundDecoration: actorAction.container.foregroundDecoration,
-              child: actorAction.container.child,
+              duration: actorAction.character.duration * _localSpeedFactor,
+              curve: actorAction.character.curve,
+              width: actorAction.character.width,
+              height: actorAction.character.height,
+              padding: actorAction.character.padding,
+              margin: actorAction.character.margin,
+              decoration: actorAction.character.decoration,
+              foregroundDecoration: actorAction.character.foregroundDecoration,
+              child: actorAction.character.child,
             ),
           );
         },
       ),
     );
 
-    if (actorAction.container.clipPath != null) {
+    if (actorAction.character.clipPath != null) {
       innerAnimations = ClipPath(
           clipBehavior: Clip.antiAlias,
-          clipper: PathClipper(pathString: actorAction.container.clipPath),
+          clipper: PathClipper(pathString: actorAction.character.clipPath),
           child: innerAnimations);
     }
 
@@ -574,8 +572,6 @@ class _WidgetDirectorItemState extends State<WidgetDirectorItem>
           duration: actorAction.path.duration * _localSpeedFactor,
           child: innerAnimations,
           path: actorAction.path.path,
-          fixedHeight: actorAction.path.fixedHeight,
-          fixedWidth: actorAction.path.fixedWidth,
           displayPath: actorAction.path.displayPath,
           fadingProgress: actorAction.path.fadingProgress,
           displayProgress: actorAction.path.displayProgress,
@@ -637,14 +633,14 @@ class _WidgetDirectorItemState extends State<WidgetDirectorItem>
 
 class SnapShotActorAction {
   ActorPosition position;
-  ActorContainer container;
+  ActorCharacter character;
   ActorScale scale;
 
-  SnapShotActorAction({this.position, this.container, this.scale});
+  SnapShotActorAction({this.position, this.character, this.scale});
 
   @override
   String toString() {
-    return "<<Pos:${this.position}-Cont:${this.container}-Scl:${this.scale}>>";
+    return "<<Pos:${this.position}-Cont:${this.character}-Scl:${this.scale}>>";
   }
 }
 
@@ -658,7 +654,7 @@ class ActorAction {
   ActorPath path;
   ActorPosition position;
   ActorOpacity opacity;
-  ActorContainer container;
+  ActorCharacter character;
   ActorRotation rotation;
   ActorScale scale;
 
@@ -671,7 +667,7 @@ class ActorAction {
     this.position,
     this.path,
     this.opacity,
-    this.container,
+    this.character,
     this.rotation,
     this.scale
 //      this.physics
@@ -735,8 +731,6 @@ class ActorPath extends AnimationConfig {
   int progressLength;
   int progressAnimationRepeat;
   bool fadingProgress;
-  double fixedWidth;
-  double fixedHeight;
 
   ActorPath({duration,
     curve,
@@ -750,9 +744,7 @@ class ActorPath extends AnimationConfig {
     this.progressStyle,
     this.progressLength,
     this.progressAnimationRepeat,
-    this.fadingProgress,
-    this.fixedWidth,
-    this.fixedHeight})
+    this.fadingProgress})
       : /*assert(path != null),*/
         assert(traversePercentage == null ||
             (traversePercentage > 0 && traversePercentage <= 1000)),
@@ -767,7 +759,7 @@ class ActorOpacity extends AnimationConfig {
       : super(duration: duration, curve: curve);
 }
 
-class ActorContainer extends AnimationConfig {
+class ActorCharacter extends AnimationConfig {
   double width;
   double height;
   Widget child;
@@ -777,7 +769,7 @@ class ActorContainer extends AnimationConfig {
   BoxDecoration decoration;
   BoxDecoration foregroundDecoration;
 
-  ActorContainer({duration,
+  ActorCharacter({duration,
     curve,
     this.child,
     this.padding,
