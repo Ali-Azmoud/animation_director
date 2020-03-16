@@ -1,6 +1,6 @@
 name: animation_director
-description: A package to create nice and smooth animations for flutter
-version: 0.0.1
+description: AnimationDirector is a package to create beautiful and smooth animations for flutter framework
+version: 0.1.0
 homepage: https://github.com/Ali-Azmoud/animation_director
 
 environment:

@@ -1,6 +1,3 @@
-## EDITING ...
-
-
 # animation_director
 
 A package to create nice and smooth animations for flutter
@@ -69,6 +66,26 @@ using `waitBeforeStart`
 
 
 # ActorAction Features
+
+Each `ActorAction` has following features
+
+```dart
+    List<String> group; // you can define one or multi group for action.
+    Function onCompleted;
+    Function onStart;
+    Duration waitBeforeStart; // the amount of time the current action must wait to start, after the previous action is finished
+    ActorPath path;
+    ActorPosition position;
+    ActorOpacity opacity;
+    ActorCharacter character;
+    ActorRotation rotation;
+    ActorScale scale;
+```
+
+if you want to animate some of your `ActorWidget`s, you can give a name to the actions of your actor. then start your `AnimationDirector` by that group.
+Using this, only `ActorWidget`s which has the given `group` animate.  
+This is useful when you want to trigger an animation manually. see Example Menu3x3.
+
 
 ## ActorCharacter
 
@@ -157,7 +174,7 @@ To rotate, flip horizontal or vertical your `Actor` widget, you can use `ActorRo
 
 ## ActorPath
 
-You can draw a path by using `ActorPath`. and if you define a `ActorCharacter` along with `ActorPath`, the container will
+You can draw a path by using `ActorPath`. and if you define an `ActorCharacter` along with `ActorPath`, the character will
 move along the created path.
 
 To draw your path again use [FlutterDev.site Path Creator](http://flutterdev.site/path-creator).
@@ -180,7 +197,6 @@ To draw your path again use [FlutterDev.site Path Creator](http://flutterdev.sit
     bool fadingProgress; // to make the tail of the progress line faded
 ```
 
-
 # Path Creator
 
 In order to create paths easily head to [FlutterDev.site Path Creator](http://flutterdev.site/path-creator).  
@@ -200,3 +216,65 @@ effect with `Adaptive Width`. (500 for example)
 ![](showcase/adaptive.png)
 
 But keep in mind, in both cases, the result may be different on different screen-sizes. 
+
+
+
+# Example
+
+Let's say we want to animate an orange circle from top-center of the screen to the center. Then after 2 seconds,
+move the circle to the bottom of the page.  
+
+
+The first step is to create our character and position it to top of the page.
+```dart
+  ActorAction(
+    position: ActorPosition(top: 0, left: 0, right: 0),
+    character: ActorCharacter(
+      child: Center(
+        child: Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            color: Colors.orangeAccent,
+            borderRadius: BorderRadius.circular(50),
+          ),
+        ),
+      )
+    ),
+  ),
+```
+
+The second step is to move it to the center of the page, so let's add another `ActorAction`
+```dart
+
+    ...
+    ActorAction(
+        position: ActorPosition(
+          curve: Curves.elasticOut,
+          duration: Duration(milliseconds: 800),
+          top: MediaQuery.of(context).size.height / 2 - 25),
+    ),
+    ...
+    
+```
+
+And the final step is to move our circle to the bottom of the page after 2 seconds
+
+```dart
+
+    ...
+    ActorAction(
+        waitBeforeStart: Duration(seconds: 2),
+        position: ActorPosition(
+          duration: Duration(milliseconds: 800),
+          curve: Curves.elasticOut,
+          top: MediaQuery.of(context).size.height - 100),
+    ),
+    ...
+    
+```
+
+and you get the following result
+
+![](showcase/example-h.gif)
+

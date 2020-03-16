@@ -886,6 +886,7 @@ class PathAnimationState extends State<PathAnimation>
   int _repeatedAnimation = 0;
   int progressLength;
   PathMetric pathMetric;
+  Widget pathWidget = Container();
 
   List<Offset> points = [];
 
@@ -924,6 +925,15 @@ class PathAnimationState extends State<PathAnimation>
             setState(() {});
           });
 
+    if (widget.displayPath) {
+      pathWidget = Positioned(
+        top: 0,
+        child: CustomPaint(
+          painter: PathPainter(path: _path, pathStyle: widget.pathStyle),
+        ),
+      );
+    }
+
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _controller.forward();
     });
@@ -942,15 +952,7 @@ class PathAnimationState extends State<PathAnimation>
         overflow: Overflow.visible,
 //        fit: StackFit.expand,
         children: <Widget>[
-          (widget.displayPath)
-              ? Positioned(
-                  top: 0,
-                  child: CustomPaint(
-                    painter:
-                        PathPainter(path: _path, pathStyle: widget.pathStyle),
-                  ),
-                )
-              : Container(),
+          pathWidget,
           (widget.displayProgress)
               ? Positioned(
                   top: 0,
@@ -1013,13 +1015,16 @@ class PathPainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint = pathStyle ?? Paint()
-      ..color = Colors.redAccent.withOpacity(0.3)
-      ..style = PaintingStyle.stroke
-      ..strokeCap = StrokeCap.round
-      ..isAntiAlias = false
-      ..strokeWidth = 15.0;
+    if (pathStyle == null) {
+      pathStyle = Paint()
+        ..color = Colors.blueAccent.withOpacity(0.3)
+        ..style = PaintingStyle.stroke
+        ..strokeCap = StrokeCap.round
+        ..isAntiAlias = false
+        ..strokeWidth = 15.0;
+    }
 
+    Paint paint = pathStyle;
     canvas.drawPath(this.path, paint);
   }
 
@@ -1036,10 +1041,14 @@ class LinePainter extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    Paint paint = progressStyle ?? Paint()
-      ..color = Colors.blueAccent
-      ..style = PaintingStyle.stroke
-      ..strokeWidth = 3.0;
+    if (progressStyle == null) {
+      progressStyle = Paint()
+        ..color = Colors.blueAccent
+        ..style = PaintingStyle.stroke
+        ..strokeWidth = 3.0;
+    }
+
+    Paint paint = progressStyle;
 
     if (fadingProgress) {
       double opacityIntense = 1 / points.length;
@@ -1120,35 +1129,37 @@ Path generatePath({Path path, String pathString}) {
 
     switch (pointType) {
       case 'M':
-        path.moveTo(calcWidth(doublePointValues[0], adaptiveWidth),
-            calcHeight(doublePointValues[1], adaptiveHeight));
+        path.moveTo(_calcWidth(doublePointValues[0], adaptiveWidth),
+            _calcHeight(doublePointValues[1], adaptiveHeight));
         break;
       case 'L':
-        path.lineTo(calcWidth(doublePointValues[0], adaptiveWidth),
-            calcHeight(doublePointValues[1], adaptiveHeight));
+        path.lineTo(_calcWidth(doublePointValues[0], adaptiveWidth),
+            _calcHeight(doublePointValues[1], adaptiveHeight));
         break;
       case 'Q':
         path.quadraticBezierTo(
-            calcWidth(doublePointValues[0], adaptiveWidth),
-            calcHeight(doublePointValues[1], adaptiveHeight),
-            calcWidth(doublePointValues[2], adaptiveWidth),
-            calcHeight(doublePointValues[3], adaptiveHeight));
+            _calcWidth(doublePointValues[0], adaptiveWidth),
+            _calcHeight(doublePointValues[1], adaptiveHeight),
+            _calcWidth(doublePointValues[2], adaptiveWidth),
+            _calcHeight(doublePointValues[3], adaptiveHeight));
         break;
       case 'C':
         path.cubicTo(
-          calcWidth(doublePointValues[0], adaptiveWidth),
-          calcHeight(doublePointValues[1], adaptiveHeight),
-          calcWidth(doublePointValues[2], adaptiveWidth),
-          calcHeight(doublePointValues[3], adaptiveHeight),
-          calcWidth(doublePointValues[4], adaptiveWidth),
-          calcHeight(doublePointValues[5], adaptiveHeight),
+          _calcWidth(doublePointValues[0], adaptiveWidth),
+          _calcHeight(doublePointValues[1], adaptiveHeight),
+          _calcWidth(doublePointValues[2], adaptiveWidth),
+          _calcHeight(doublePointValues[3], adaptiveHeight),
+          _calcWidth(doublePointValues[4], adaptiveWidth),
+          _calcHeight(doublePointValues[5], adaptiveHeight),
         );
         break;
       case 'A':
         path.arcToPoint(
-          Offset(calcWidth(doublePointValues[5], adaptiveWidth),
-              calcHeight(doublePointValues[6], adaptiveHeight)),
-          radius: Radius.elliptical(doublePointValues[0], doublePointValues[1]),
+          Offset(_calcWidth(doublePointValues[5], adaptiveWidth),
+              _calcHeight(doublePointValues[6], adaptiveHeight)),
+          radius: Radius.elliptical(
+              _calcWidth(doublePointValues[0], adaptiveWidth),
+              _calcHeight(doublePointValues[1], adaptiveHeight)),
           rotation: doublePointValues[2],
           clockwise: doublePointValues[4] == 1 ? true : false,
           largeArc: doublePointValues[3] == 1 ? true : false,
@@ -1162,13 +1173,13 @@ Path generatePath({Path path, String pathString}) {
   return path;
 }
 
-double calcWidth(double size, double relatedWidth) {
+double _calcWidth(double size, double relatedWidth) {
   if (relatedWidth == null) return size;
   double percent = size * 100 / relatedWidth;
   return percent * screenWidth / 100;
 }
 
-double calcHeight(double size, double relatedHeight) {
+double _calcHeight(double size, double relatedHeight) {
   if (relatedHeight == null) return size;
   double percent = size * 100 / relatedHeight;
   return percent * screenHeight / 100;
