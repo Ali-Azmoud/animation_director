@@ -14,6 +14,7 @@ Here there are some simple examples of what I've made with this package in 5 min
 ![](showcase/animator-m3x3-h.gif)
 ![](showcase/hamburger-h.gif)
 ![](showcase/mr-fastfood-h.gif)
+![](showcase/taxi-h.gif)
 
 
 The following descriptions may sounds complicated but it's pretty simple, sorry for my bad english, I think if you jump to 

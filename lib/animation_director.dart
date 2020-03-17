@@ -68,7 +68,7 @@ class _AnimationDirectorState extends State<AnimationDirector>
         widget.onCompleted(_repeatedTimes, finishTime.difference(_startTime));
 
       if (_repeatedTimes < widget.repeatTimes && widget.group == null) {
-        _freshStart = true;
+//        _freshStart = true;
         initialize(repeat: true);
       }
     }
@@ -90,13 +90,13 @@ class _AnimationDirectorState extends State<AnimationDirector>
 
     super.initState();
 
-//    initialize();
+    initialize();
   }
 
   @override
   void didUpdateWidget(AnimationDirector oldWidget) {
-    initialize();
     super.didUpdateWidget(oldWidget);
+    initialize();
   }
 
   initialize({bool repeat = false}) {
@@ -145,7 +145,7 @@ class _AnimationDirectorState extends State<AnimationDirector>
     }
 
     return Stack(
-      overflow: Overflow.clip,
+      overflow: Overflow.visible,
       children: _widgetsArray,
     );
   }
@@ -209,7 +209,7 @@ class _AnimationDirectorState extends State<AnimationDirector>
 
   @override
   void dispose() {
-    cif.cancel();
+    if (cif != null) cif.cancel();
     super.dispose();
   }
 }
@@ -1192,3 +1192,13 @@ String _randomKey() {
   randomNumber += Random().nextInt(999999).toString();
   return randomNumber;
 }
+
+/*
+* *
+* * Written by Ali Azmoude <ali.azmoude@gmail.com>
+* *
+* *
+* *
+* * When I wrote this, only God and I understood what I was doing.
+* * Now, God only knows "Karl Weierstrass"
+* */
